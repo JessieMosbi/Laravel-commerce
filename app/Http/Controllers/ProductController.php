@@ -14,6 +14,7 @@ class ProductController extends Controller
     public function index()
     {
         $data = $this->getData();
+        return dump($data);
         return response($data);
     }
 
@@ -37,7 +38,8 @@ class ProductController extends Controller
     {
         $data = $this->getData();
         $newData = $request->all();
-        array_push($data, $newData);
+        $data->push(collect($newData));
+        dump($data);
         return response($data);
     }
 
@@ -87,19 +89,21 @@ class ProductController extends Controller
     }
 
     /**
-     * Get fake data
+     *  Get fake data
+     *
+     * @return \Illuminate\Support\Collection
      */
-    private function getData()
+    private function getData(): \Illuminate\Support\Collection
     {
-        return [
-            [
+        return collect([
+            collect([
                 'name' => 'Product 1',
                 'description' => 'This is product 1.'
-            ],
-            [
+            ]),
+            collect([
                 'name' => 'Product 2',
                 'description' => 'This is product 2.'
-            ]
-        ];
+            ])
+        ]);
     }
 }
