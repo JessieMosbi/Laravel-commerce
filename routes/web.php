@@ -18,3 +18,12 @@ Route::get('/', function () {
 });
 Route::post('/', 'ProductController@create');
 Route::resource('products', 'ProductController');
+
+Route::group([
+    'middleware' => ['checkValidIp'],
+    'prefix' => 'web',
+    'namespace' => 'Web'
+], function () {
+    Route::get('/index', 'HomeController@index');
+    Route::post('/print', 'HomeController@create');
+});
