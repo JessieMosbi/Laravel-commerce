@@ -13,7 +13,22 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $data = $this->getData();
+        return response($data);
+    }
+
+    private function getData()
+    {
+        return [
+            [
+                'name' => 'Product 1',
+                'description' => 'This is product 1.'
+            ],
+            [
+                'name' => 'Product 2',
+                'description' => 'This is product 2.'
+            ]
+        ];
     }
 
     /**
