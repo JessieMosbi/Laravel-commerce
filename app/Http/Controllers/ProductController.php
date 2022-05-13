@@ -74,7 +74,11 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $form = $request->all();
+        $data = $this->getData();
+        $selectedData = $data->where('id', $id)->first();
+        $selectedData = $selectedData->merge(collect($form));
+        return response($selectedData);
     }
 
     /**
@@ -97,12 +101,16 @@ class ProductController extends Controller
     {
         return collect([
             collect([
+                'id' => 1,
                 'name' => 'Product 1',
-                'description' => 'This is product 1.'
+                'description' => 'This is product 1.',
+                'price' => 100
             ]),
             collect([
+                'id' => 2,
                 'name' => 'Product 2',
-                'description' => 'This is product 2.'
+                'description' => 'This is product 2.',
+                'price' => 299
             ])
         ]);
     }
