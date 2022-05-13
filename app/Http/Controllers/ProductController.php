@@ -89,7 +89,11 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = $this->getData();
+        $data = $data->filter(function ($product) use ($id) {
+            return $product['id'] !== (int)$id;
+        });
+        return response($data->values());
     }
 
     /**
