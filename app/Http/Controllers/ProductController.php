@@ -17,20 +17,6 @@ class ProductController extends Controller
         return response($data);
     }
 
-    private function getData()
-    {
-        return [
-            [
-                'name' => 'Product 1',
-                'description' => 'This is product 1.'
-            ],
-            [
-                'name' => 'Product 2',
-                'description' => 'This is product 2.'
-            ]
-        ];
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -98,5 +84,22 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Get fake data
+     */
+    private function getData()
+    {
+        return [
+            [
+                'name' => 'Product 1',
+                'description' => 'This is product 1.'
+            ],
+            [
+                'name' => 'Product 2',
+                'description' => 'This is product 2.'
+            ]
+        ];
     }
 }
