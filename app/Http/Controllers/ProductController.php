@@ -49,7 +49,10 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->getData();
+        $newData = $request->all();
+        array_push($data, $newData);
+        return response($data);
     }
 
     /**
