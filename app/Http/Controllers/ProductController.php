@@ -14,7 +14,6 @@ class ProductController extends Controller
     public function index()
     {
         $data = $this->getData();
-        return dump($data);
         return response($data);
     }
 
@@ -39,7 +38,6 @@ class ProductController extends Controller
         $data = $this->getData();
         $newData = $request->all();
         $data->push(collect($newData));
-        dump($data);
         return response($data);
     }
 
