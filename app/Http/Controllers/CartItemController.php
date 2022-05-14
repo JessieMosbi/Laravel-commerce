@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CartItemController extends Controller
 {
@@ -35,11 +36,27 @@ class CartItemController extends Controller
      */
     public function store(Request $request)
     {
-        $form = $request->all();
+        $message = [
+            'required' => ':attribute 是必填',
+            'integer' => ':attribute 必須為整數',
+            'between' => ':attribute 不在 :min 和 :max 之間'
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'cart_id' => 'required|integer',
+            'product_id' => 'required|integer',
+            'quantity' => 'required|integer|between:1,10'
+        ], $message);
+
+        if ($validator->fails()) {
+            return response($validator->errors(), 400);
+        }
+
+        $validatedData = $validator->validate(); // 此函數會儲存驗證通過的資料
         DB::table('cart_items')->insert([
-            'cart_id' => $form['cart_id'],
-            'product_id' => $form['product_id'],
-            'quantity' => $form['quantity'],
+            'cart_id' => $validatedData['cart_id'],
+            'product_id' => $validatedData['product_id'],
+            'quantity' => $validatedData['quantity'],
             'created_at' => now(),
             'updated_at' => now()
         ]);
