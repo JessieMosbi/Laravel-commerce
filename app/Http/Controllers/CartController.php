@@ -23,7 +23,7 @@ class CartController extends Controller
             ]);
             $cart = DB::table('carts')->get()->first();
         }
-        $cartItems = DB::table('cart_itmes')->where('cart_id', $cart->id)->get();
+        $cartItems = DB::table('cart_items')->where('cart_id', $cart->id)->get();
         $cart = collect($cart);
         $cart['items'] = collect($cartItems); // 避免 response 出錯，均要轉成 collection
 
