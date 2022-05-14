@@ -14,8 +14,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $data = DB::table('sbl_teams')->get();
-        return response($data);
+        $data = DB::table('products')->get();
+        return response(collect($data));
     }
 
     /**
