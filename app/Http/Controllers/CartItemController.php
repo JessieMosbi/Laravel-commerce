@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UpdateCartItem;
 
 class CartItemController extends Controller
 {
@@ -92,9 +93,10 @@ class CartItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    // 執行 update function 時，會呼叫 UpdateCartItem 裡面的程式去做 validation
+    public function update(UpdateCartItem $request, $id)
     {
-        $form = $request->all();
+        $form = $request->validated();
         DB::table('cart_items')
             ->where('id', $id)
             ->update([
