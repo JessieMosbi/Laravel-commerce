@@ -14,7 +14,20 @@ class CartController extends Controller
      */
     public function index()
     {
-        //
+        $cart = DB::table('carts')->get()->first();
+
+        if (empty($cart)) {
+            DB::table('carts')->insert([
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
+            $cart = DB::table('carts')->get()->first();
+        }
+        $cartItems = DB::table('cart_itmes')->where('cart_id', $cart->id)->get();
+        $cart = collect($cart);
+        $cart['items'] = collect($cartItems); // 避免 response 出錯，均要轉成 collection
+
+        return response($cart);
     }
 
     /**
