@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdateCartItem;
+use App\Models\Cart;
 
 class CartItemController extends Controller
 {
@@ -54,14 +55,14 @@ class CartItemController extends Controller
         }
 
         $validatedData = $validator->validate(); // 此函數會儲存驗證通過的資料
-        DB::table('cart_items')->insert([
-            'cart_id' => $validatedData['cart_id'],
+
+        $cart = Cart::find($validatedData['cart_id']);
+        $cartItem = $cart->cartItems()->create([
             'product_id' => $validatedData['product_id'],
-            'quantity' => $validatedData['quantity'],
-            'created_at' => now(),
-            'updated_at' => now()
+            'quantity' => $validatedData['quantity']
         ]);
-        return response()->json(true);
+
+        return response()->json($cartItem);
     }
 
     /**
