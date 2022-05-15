@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\UpdateCartItem;
 use App\Models\Cart;
+use App\Models\CartItem;
 
 class CartItemController extends Controller
 {
@@ -98,12 +99,12 @@ class CartItemController extends Controller
     public function update(UpdateCartItem $request, $id)
     {
         $form = $request->validated();
-        DB::table('cart_items')
-            ->where('id', $id)
-            ->update([
-                'quantity' => $form['quantity'],
-                'updated_at' => now()
-            ]);
+        // CartItem::find($id)->update([
+        //     'quantity' => $form['quantity']
+        // ]);
+        $item = CartItem::find($id); // fill: 先填好但不儲存
+        $item->fill(['quantity' => $form['quantity']]);
+        $item->save();
         return response()->json(true);
     }
 
@@ -115,9 +116,7 @@ class CartItemController extends Controller
      */
     public function destroy($id)
     {
-        DB::table('cart_items')
-            ->where('id', $id)
-            ->delete();
+        CartItem::find($id)->delete();
         return response()->json(true);
     }
 }
